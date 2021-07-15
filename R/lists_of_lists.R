@@ -13,21 +13,21 @@
 #'
 list_of_lists_retrieve_second_level_property <- function(list_of_lists, name_of_property, function_for_sublist_assertion=function(x) { return(TRUE) }){
   #Assertions
-  assert_that(is.function(function_for_sublist_assertion))
-  assert_that(assertthat::is.string(name_of_property))
-  assert_that(is_list_of_lists(list_of_lists))
-  assert_that(length(list_of_lists) > 0)
+  assertthat::assert_that(is.function(function_for_sublist_assertion))
+  assertthat::assert_that(assertthat::is.string(name_of_property))
+  assertthat::assert_that(is_list_of_lists(list_of_lists))
+  assertthat::assert_that(length(list_of_lists) > 0)
 
   #Main
   main_result <- purrr::map(.x = list_of_lists, .f = function(second_level_objects) {
-    assert_that(function_for_sublist_assertion(second_level_objects))
-    assert_that(magrittr::is_in(name_of_property, names(second_level_objects)))
+    assertthat::assert_that(function_for_sublist_assertion(second_level_objects))
+    assertthat::assert_that(magrittr::is_in(name_of_property, names(second_level_objects)))
     return(second_level_objects[[name_of_property]])
   } ) %>%
     unlist
   #Output Assertions
-  assert_that(length(main_result) == length(list_of_lists))
-  assert_that(!is.list(main_result))
+  assertthat::assert_that(length(main_result) == length(list_of_lists))
+  assertthat::assert_that(!is.list(main_result))
   return(main_result)
 }
 
